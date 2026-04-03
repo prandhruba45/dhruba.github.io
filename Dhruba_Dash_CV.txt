@@ -1,0 +1,40 @@
+DHRUBA DASH
+Mechanical Engineer
+Email: dhruba.1121@gmail.com
+LinkedIn: https://www.linkedin.com/in/dhruba-dash
+
+EXPERIENCE
+----------
+Assistant Engineer — PRAN-RFL Group (Jun 2025 – Present)
+• Oversee plant maintenance & troubleshooting for flexible packaging foil production lines
+• Drive production efficiency improvements, reducing downtime through proactive fault diagnosis
+• Promoted from MTO Engineer within 7 months based on performance
+
+Trainee Engineer (MTO) — PRAN-RFL Group (Dec 2024 – Jun 2025)
+• Supported mechanical maintenance and production engineering operations
+• Built foundational knowledge in production workflows that led to early promotion
+
+Industrial Trainee — BCIC / Shahjalal Fertilizer Co. (Oct 2023)
+• Observed fuel supply and flue gas cycle across two 12-MW gas power plants
+• Exposure to boilers, superheaters, steam turbine-generators, and condensers
+
+Industrial Trainee — Elite Hitech Industries Ltd. (Feb–Mar 2023)
+• Trained in assembly line operations, HVAC systems, and air conditioning unit production
+
+Industrial Trainee — United Energy Ltd. (Sep 2022)
+• Hands-on training in maintenance protocols and safety procedures
+
+EDUCATION
+---------
+BSc. in Mechanical Engineering — Shahjalal University of Science & Technology (SUST)
+
+SKILLS
+------
+Mechanical Engineering | Plant Maintenance | Preventive Maintenance | Troubleshooting
+SolidWorks | ANSYS | AutoCAD | MATLAB | HVAC Systems | IoT | Lean Manufacturing
+
+PROJECT
+-------
+Smart Home with IoT Features (Aug 2022 – Jan 2023)
+Designed a low-cost smart home automation system integrating IoT sensors and embedded systems.
+Skills: IoT, Sensor Fusion, Embedded Systems, Circuit Design

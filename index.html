@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dhruba Dash — Mechanical Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --yellow: #FFD600;
+    --orange: #FF6B2B;
+    --teal: #00C9A7;
+    --blue: #3B82F6;
+    --pink: #FF4D8D;
+    --dark: #0E0E0E;
+    --mid: #1A1A1A;
+    --card: #1E1E1E;
+    --text: #F0F0F0;
+    --muted: #888;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 14px; height: 14px;
+    background: var(--yellow);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 40px; height: 40px;
+    border: 2px solid var(--yellow);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.25s ease;
+    mix-blend-mode: difference;
+    opacity: 0.5;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(14,14,14,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .logo {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+  }
+  .logo span { color: var(--yellow); }
+
+  nav ul {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  nav ul a:hover { color: var(--yellow); }
+
+  /* Hero */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 80% 50%, rgba(255,214,0,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 20% 80%, rgba(0,201,167,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse 30% 30% at 60% 20%, rgba(255,107,43,0.05) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 750px;
+  }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(255,214,0,0.1);
+    border: 1px solid rgba(255,214,0,0.3);
+    color: var(--yellow);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    margin-bottom: 2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--yellow);
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(1.4); }
+  }
+
+  h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  h1 .highlight {
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.85rem 2rem;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    cursor: none;
+  }
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--dark);
+  }
+  .btn-primary:hover {
+    background: var(--orange);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(255,107,43,0.35);
+  }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--text);
+  }
+  .btn-outline:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+    transform: translateY(-2px);
+  }
+
+  .hero-floats {
+    position: absolute; right: 4rem; top: 50%;
+    transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 1rem;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .float-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 1.2rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    min-width: 220px;
+    backdrop-filter: blur(10px);
+  }
+
+  .float-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .float-card:nth-child(1) .float-icon { background: rgba(255,214,0,0.15); }
+  .float-card:nth-child(2) .float-icon { background: rgba(0,201,167,0.15); }
+  .float-card:nth-child(3) .float-icon { background: rgba(255,107,43,0.15); }
+
+  .float-label { font-size: 0.75rem; color: var(--muted); }
+  .float-value { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem; }
+
+  /* Sections */
+  section { padding: 6rem 4rem; }
+
+  .section-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 3rem;
+  }
+
+  /* Photo Section */
+  #photo {
+    background: var(--dark);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 5rem 4rem;
+  }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .photo-frame {
+    position: relative;
+    width: 280px;
+    height: 320px;
+    margin: 0 auto;
+  }
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--yellow), var(--teal), var(--orange));
+    z-index: 0;
+  }
+  .photo-frame::after {
+    content: '';
+    position: absolute;
+    bottom: -14px; right: -14px;
+    width: 100%; height: 100%;
+    border: 2px dashed rgba(255,214,0,0.25);
+    border-radius: 24px;
+    z-index: -1;
+  }
+  .photo-inner {
+    position: relative;
+    width: 100%; height: 100%;
+    border-radius: 22px;
+    overflow: hidden;
+    z-index: 1;
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.8rem;
+  }
+  .photo-inner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-placeholder { font-size: 4rem; opacity: 0.25; }
+  .photo-placeholder-text { font-size: 0.78rem; color: var(--muted); text-align: center; padding: 0 1.2rem; line-height: 1.6; }
+  .photo-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin-bottom: 0.4rem;
+  }
+  .photo-name span {
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .photo-role { color: var(--teal); font-size: 1rem; font-weight: 500; margin-bottom: 1.5rem; }
+  .photo-bio { color: #aaa; line-height: 1.8; font-size: 1rem; margin-bottom: 2rem; max-width: 460px; }
+  .photo-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-cv { background: linear-gradient(135deg, var(--teal), var(--blue)); color: white; }
+  .btn-cv:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(0,201,167,0.3); }
+
+  /* About */
+  #about {
+    background: var(--mid);
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .about-text p {
+    color: #aaa;
+    line-height: 1.8;
+    margin-bottom: 1.2rem;
+    font-size: 1.05rem;
+  }
+
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+
+  .stat-box {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .stat-box:hover {
+    transform: translateY(-4px);
+    border-color: var(--yellow);
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { color: var(--muted); font-size: 0.85rem; margin-top: 0.3rem; }
+
+  /* Skills */
+  #skills { background: var(--dark); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .skill-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 1.8rem;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 20px 20px 0 0;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .skill-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.15); }
+  .skill-card:hover::before { opacity: 1; }
+
+  .skill-card:nth-child(1)::before { background: linear-gradient(90deg, var(--yellow), var(--orange)); }
+  .skill-card:nth-child(2)::before { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+  .skill-card:nth-child(3)::before { background: linear-gradient(90deg, var(--pink), var(--orange)); }
+  .skill-card:nth-child(4)::before { background: linear-gradient(90deg, var(--blue), var(--teal)); }
+
+  .skill-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .skill-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    color: #ccc;
+  }
+
+  /* Experience */
+  #experience { background: var(--mid); }
+
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--yellow), var(--teal), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding-left: 2rem;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.43rem; top: 0.4rem;
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    background: var(--yellow);
+    border: 2px solid var(--dark);
+    box-shadow: 0 0 0 3px rgba(255,214,0,0.2);
+  }
+
+  .timeline-date {
+    font-size: 0.8rem;
+    color: var(--yellow);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .timeline-role {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    margin-bottom: 0.2rem;
+  }
+  .timeline-company {
+    color: var(--teal);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+  }
+  .timeline-desc {
+    color: #999;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .timeline-desc ul { padding-left: 1.2rem; }
+  .timeline-desc li { margin-bottom: 0.3rem; }
+
+  /* Project */
+  #projects { background: var(--dark); }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 24px;
+    padding: 2.5rem;
+    max-width: 700px;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; right: -40px;
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,214,0,0.08), transparent 70%);
+  }
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,214,0,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .project-badge {
+    display: inline-block;
+    background: rgba(0,201,167,0.12);
+    border: 1px solid rgba(0,201,167,0.3);
+    color: var(--teal);
+    font-size: 0.75rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.8rem;
+  }
+
+  .project-desc {
+    color: #999;
+    line-height: 1.75;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Contact */
+  #contact {
+    background: var(--mid);
+    text-align: center;
+  }
+
+  .contact-inner { max-width: 600px; margin: 0 auto; }
+
+  .contact-inner p {
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-links {
+    display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .contact-chip {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 0.7rem 1.4rem;
+    border-radius: 999px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    cursor: none;
+  }
+  .contact-chip:hover {
+    border-color: var(--yellow);
+    color: var(--yellow);
+    transform: translateY(-2px);
+  }
+
+  /* Footer */
+  footer {
+    background: var(--dark);
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  footer span { color: var(--yellow); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    nav ul { gap: 1.5rem; }
+    #hero { padding: 6rem 2rem 4rem; flex-direction: column; }
+    .hero-floats { position: relative; right: auto; top: auto; transform: none; margin-top: 3rem; }
+    section { padding: 4rem 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    h1 { font-size: clamp(2.8rem, 12vw, 5rem); }
+  }
+
+  @media (max-width: 600px) {
+    nav ul { display: none; }
+    .hero-floats { flex-direction: column; }
+    .float-card { min-width: unset; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="logo">D<span>.</span>Dash</div>
+  <ul>
+    <li><a href="#photo">Profile</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">🟢 Open to New Opportunities</div>
+    <h1>Dhruba<br/><span class="highlight">Dash</span></h1>
+    <p class="hero-sub">Mechanical Engineer specializing in plant maintenance, production efficiency & industrial systems. SUST graduate, currently at PRAN-RFL Group.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-primary">Get in Touch →</a>
+      <a href="#experience" class="btn btn-outline">View Experience</a>
+    </div>
+  </div>
+
+  <div class="hero-floats">
+    <div class="float-card">
+      <div class="float-icon">⚙️</div>
+      <div>
+        <div class="float-label">Current Role</div>
+        <div class="float-value">Assistant Engineer</div>
+      </div>
+    </div>
+    <div class="float-card">
+      <div class="float-icon">🏭</div>
+      <div>
+        <div class="float-label">Company</div>
+        <div class="float-value">PRAN-RFL Group</div>
+      </div>
+    </div>
+    <div class="float-card">
+      <div class="float-icon">🎓</div>
+      <div>
+        <div class="float-label">Education</div>
+        <div class="float-value">BSc. Mech. Eng. — SUST</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO / INTRO -->
+<section id="photo">
+  <div class="photo-grid reveal">
+    <div class="photo-frame">
+      <div class="photo-inner">
+        <!-- Replace below with: <img src="your-photo.jpg" alt="Dhruba Dash" /> -->
+        <div class="photo-placeholder">👤</div>
+        <div class="photo-placeholder-text">Add your photo by replacing this with an img tag</div>
+      </div>
+    </div>
+    <div class="photo-info">
+      <div class="section-tag">Hello, I am</div>
+      <div class="photo-name">Dhruba <span>Dash</span></div>
+      <div class="photo-role">⚙️ Mechanical Engineer · PRAN-RFL Group · SUST Graduate</div>
+      <p class="photo-bio">A results-driven engineer with hands-on expertise in plant maintenance, production efficiency, and industrial systems. I combine technical precision with creative problem-solving to deliver real impact on the factory floor.</p>
+      <div class="photo-actions">
+        <a href="#contact" class="btn btn-primary">Get in Touch →</a>
+        <a href="#" class="btn btn-cv" onclick="downloadCV(event)">📄 Download CV</a>
+        <a href="https://www.linkedin.com/in/dhruba-dash" target="_blank" class="btn btn-outline">💼 LinkedIn</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <div class="section-tag">About Me</div>
+      <h2>Engineering ideas<br/>into reality</h2>
+      <p>I'm a Mechanical Engineer with 1+ year of hands-on experience in plant maintenance, troubleshooting, and production optimization at PRAN-RFL Group — one of Bangladesh's largest manufacturing conglomerates.</p>
+      <p>My passion lies in solving complex industrial problems through analytical thinking and engineering precision. From power plants to HVAC systems, I've built practical exposure across diverse industrial environments.</p>
+      <p>I'm currently exploring new opportunities where I can contribute to high-impact engineering teams in manufacturing, energy, or industrial engineering.</p>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-box">
+        <div class="stat-num">1+</div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4</div>
+        <div class="stat-label">Industrial Trainings</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Technical Tools</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">BSc.</div>
+        <div class="stat-label">Mech. Engineering — SUST</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-tag">What I Work With</div>
+  <h2>Skills & Tools</h2>
+  <div class="skills-grid">
+    <div class="skill-card reveal">
+      <div class="skill-icon">🔧</div>
+      <div class="skill-title">Mechanical Engineering</div>
+      <div class="skill-tags">
+        <span class="tag">Plant Maintenance</span>
+        <span class="tag">Troubleshooting</span>
+        <span class="tag">Preventive Maintenance</span>
+        <span class="tag">Production Engineering</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">💻</div>
+      <div class="skill-title">Design & Simulation</div>
+      <div class="skill-tags">
+        <span class="tag">SolidWorks</span>
+        <span class="tag">ANSYS</span>
+        <span class="tag">AutoCAD</span>
+        <span class="tag">MATLAB</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🏭</div>
+      <div class="skill-title">Industrial Systems</div>
+      <div class="skill-tags">
+        <span class="tag">HVAC Systems</span>
+        <span class="tag">Assembly Line Ops</span>
+        <span class="tag">Power Generation</span>
+        <span class="tag">Lean Manufacturing</span>
+      </div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="skill-icon">🤝</div>
+      <div class="skill-title">Professional Skills</div>
+      <div class="skill-tags">
+        <span class="tag">Team Collaboration</span>
+        <span class="tag">IoT</span>
+        <span class="tag">Inventory Management</span>
+        <span class="tag">Communication</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-tag">Career Journey</div>
+  <h2>Experience</h2>
+  <div class="timeline">
+
+    <div class="timeline-item reveal">
+      <div class="timeline-date">Jun 2025 – Present</div>
+      <div class="timeline-role">Assistant Engineer</div>
+      <div class="timeline-company">PRAN-RFL Group · Habiganj, Sylhet</div>
+      <div class="timeline-desc">
+        <ul>
+          <li>Oversee plant maintenance & troubleshooting for flexible packaging foil production lines</li>
+          <li>Drive production efficiency improvements, reducing downtime through proactive fault diagnosis</li>
+          <li>Promoted from MTO Engineer within 7 months based on performance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-date">Dec 2024 – Jun 2025</div>
+      <div class="timeline-role">Trainee Engineer (MTO)</div>
+      <div class="timeline-company">PRAN-RFL Group · Habiganj, Sylhet</div>
+      <div class="timeline-desc">
+        <ul>
+          <li>Supported mechanical maintenance and production engineering operations</li>
+          <li>Built foundational knowledge in production workflows that led to early promotion</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-date">Oct 2023</div>
+      <div class="timeline-role">Industrial Trainee</div>
+      <div class="timeline-company">Bangladesh Chemical Industries Corporation (BCIC)</div>
+      <div class="timeline-desc">
+        Observed full fuel supply and flue gas cycle operations across two 12-MW gas power plants. Gained technical exposure to boilers, superheaters, steam turbine-generators, and condensers.
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-date">Feb 2023 – Mar 2023</div>
+      <div class="timeline-role">Industrial Trainee</div>
+      <div class="timeline-company">Elite Hitech Industries Ltd. · Comilla</div>
+      <div class="timeline-desc">
+        Trained in assembly line operations, HVAC systems, and air conditioning unit production. Developed knowledge of shop floor management and electrical component assembly.
+      </div>
+    </div>
+
+    <div class="timeline-item reveal">
+      <div class="timeline-date">Sep 2022</div>
+      <div class="timeline-role">Industrial Trainee</div>
+      <div class="timeline-company">United Energy Ltd. (UEL) · Sylhet</div>
+      <div class="timeline-desc">
+        Attended hands-on training in maintenance protocols and safety procedures. Observed power generation equipment in operation and gained insight into energy production workflows.
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-tag">What I've Built</div>
+  <h2>Projects</h2>
+  <div class="project-card reveal">
+    <div class="project-badge">🔬 Engineering Project · Aug 2022 – Jan 2023</div>
+    <div class="project-title">Smart Home with IoT Features</div>
+    <p class="project-desc">Designed and developed a low-cost smart home automation system integrating IoT sensors and embedded systems. The project prioritized accessibility and ease of use for a wide range of users, combining hardware and software to deliver a seamless smart home experience.</p>
+    <div class="skill-tags">
+      <span class="tag">IoT</span>
+      <span class="tag">Sensor Fusion</span>
+      <span class="tag">Embedded Systems</span>
+      <span class="tag">Circuit Design</span>
+      <span class="tag">Teamwork</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-tag">Let's Connect</div>
+    <h2>Open to New<br/>Opportunities</h2>
+    <p>I'm actively looking for roles in manufacturing, energy, or industrial engineering. If you have an exciting opportunity or just want to say hello — reach out!</p>
+    <div class="contact-links">
+      <a href="mailto:dhruba.1121@gmail.com" class="contact-chip">📧 dhruba.1121@gmail.com</a>
+      <a href="https://www.linkedin.com/in/dhruba-dash" target="_blank" class="contact-chip">💼 LinkedIn</a>
+      <a href="Dhruba_Dash_CV.pdf" download class="contact-chip" id="cv-download">📄 Download CV</a>
+    </div>
+    <a href="mailto:dhruba.1121@gmail.com" class="btn btn-primary">Say Hello →</a>
+  </div>
+</section>
+
+<footer>
+  <p>Designed & built with ❤️ by <span>Dhruba Dash</span> · 2025</p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx - 7 + 'px';
+    cursor.style.top = my - 7 + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx - 20) * 0.12;
+    ry += (my - ry - 20) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2)';
+      ring.style.transform = 'scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+            if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
+
+  // CV Download
+  function downloadCV(e) {
+    e.preventDefault();
+    const cv = `DHRUBA DASH...;...}
+Mechanical Engineer
+Email: dhruba.1121@gmail.com
+LinkedIn: https://www.linkedin.com/in/dhruba-dash
+
+EXPERIENCE
+----------
+Assistant Engineer — PRAN-RFL Group (Jun 2025 – Present)
+• Oversee plant maintenance & troubleshooting for flexible packaging foil production lines
+• Drive production efficiency improvements, reducing downtime through proactive fault diagnosis
+• Promoted from MTO Engineer within 7 months based on performance
+
+Trainee Engineer (MTO) — PRAN-RFL Group (Dec 2024 – Jun 2025)
+• Supported mechanical maintenance and production engineering operations
+• Built foundational knowledge in production workflows that led to early promotion
+
+Industrial Trainee — BCIC / Shahjalal Fertilizer Co. (Oct 2023)
+• Observed fuel supply and flue gas cycle across two 12-MW gas power plants
+• Exposure to boilers, superheaters, steam turbine-generators, and condensers
+
+Industrial Trainee — Elite Hitech Industries Ltd. (Feb–Mar 2023)
+• Trained in assembly line operations, HVAC systems, and air conditioning unit production
+
+Industrial Trainee — United Energy Ltd. (Sep 2022)
+• Hands-on training in maintenance protocols and safety procedures
+
+EDUCATION
+---------
+BSc. in Mechanical Engineering — Shahjalal University of Science & Technology (SUST)
+
+SKILLS
+------
+Mechanical Engineering | Plant Maintenance | Preventive Maintenance | Troubleshooting
+SolidWorks | ANSYS | AutoCAD | MATLAB | HVAC Systems | IoT | Lean Manufacturing
+
+PROJECT
+-------
+Smart Home with IoT Features (Aug 2022 – Jan 2023)
+Designed a low-cost smart home automation system integrating IoT sensors and embedded systems.
+Skills: IoT, Sensor Fusion, Embedded Systems, Circuit Design
+`;
+    const blob = new Blob([cv], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Dhruba_Dash_CV.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+</script>
+</body>
+</html>
